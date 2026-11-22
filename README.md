@@ -1,97 +1,225 @@
-# AI_LLM_Project
+# Multi-Agent LLM Debate Experiment
 
-V2 of the DeepSeek multi-agent debate experiment. The included manifests reuse the
-existing seed-42 samples. The pilot has 3 questions per dataset and the final
-has 50 per dataset. The two samples are disjoint.
+## 1. Project Overview
 
-| Configuration | Agents | Debate rounds |
+This project investigates how multi-agent debate affects the accuracy, reliability, and computational cost of Large Language Models (LLMs).
+
+The experiment compares a single-agent baseline against multi-agent systems with different numbers of debate rounds. Two datasets, MMLU-Pro and GSM8K, are used to evaluate model performance across different configurations.
+
+The system incorporates independent initial responses, structured debate stages, response auditing, and strict majority voting to examine how answers evolve throughout the debate process.
+
+## 2. Experimental Design
+
+### Datasets
+
+| Dataset | Pilot Questions | Final Questions |
+|---|---:|---:|
+| MMLU-Pro | 3 | 50 |
+| GSM8K | 3 | 50 |
+| **Total** | **6** | **100** |
+
+Pilot and final samples are disjoint. Saved question manifests and random seeds support reproducibility.
+
+### Model Configurations
+
+| Configuration | Agents | Debate Rounds |
 |---|---:|---:|
 | Baseline | 1 | 0 |
-| A (formerly D) | 3 | 1 |
-| B (formerly E) | 3 | 2 |
-| C (formerly F) | 3 | 3 |
+| A | 3 | 1 |
+| B | 3 | 2 |
+| C | 3 | 3 |
 
-## Setup
+The baseline generates an independent answer without debate. The other configurations use three agents that exchange responses across the specified number of debate rounds.
 
-Unzip the project and open a terminal in the AI_LLM_Project folder. Use the
-Python environment from the original project, or create one and install the
+## 3. System Design and Evaluation
+
+### Response Generation and Debate
+
+- Each agent generates an independent initial answer.
+- Agents can access previous-stage responses and discussion during subsequent debate rounds.
+- Dataset-specific prompts are defined in `prompts.json`.
+- A configurable output-token limit is shared across pilot and final experiments.
+
+### Response Auditing and Voting
+
+Every response is audited before voting.
+
+Responses are considered invalid when they contain issues such as abnormal finish reasons, missing or duplicate final-answer lines, malformed answers, or unavailable answer options.
+
+- Original response text is preserved.
+- Invalid responses do not contribute votes.
+- Invalid responses remain in the primary accuracy denominators.
+- Strict majority voting is applied across all configured agent slots.
+- An unresolved vote is counted as incorrect.
+
+### Statistical Analysis
+
+The project evaluates model performance and reliability through:
+
+- Accuracy and error rates.
+- 95% Wilson confidence intervals.
+- McNemar's tests comparing each debate configuration against the paired baseline.
+- Stage-level response validity and truncation statistics.
+- Token usage and API cost summaries.
+- Agent disagreement counts.
+- Answer transition tables showing changes across debate stages.
+
+The analysis compares questions for which all four configurations have completed results.
+
+Stage rates are expressed as fractions, while summary accuracy and resolved-vote accuracy are expressed as percentages.
+
+Runtime represents recorded active time across invocations and may omit time after the last checkpoint if an experiment is interrupted.
+
+## 4. Installation and Setup
+
+Open a terminal in the project folder.
+
+Create and activate a Python virtual environment:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
+
+Install the required dependencies:
+
+```bash
 python -m pip install -r requirements.txt
 ```
 
-## Try the workflow offline
+## 5. Running Experiments
+
+### 5.1 Offline Testing
+
+The experiment runs in mock mode by default. The following commands test the workflow using synthetic responses without making live API calls.
 
 ```bash
 python run_pilot.py --cap 1
 python debate.py analyze --out runs/mock_pilot
+
 python run_final.py --cap 5
 python debate.py analyze --out runs/mock_final
 ```
 
-These commands use synthetic responses and verify the workflow. Mock outputs
-cannot measure real model validity, disagreement, truncation, cost, or accuracy.
+Mock outputs are intended for workflow testing only. They cannot measure real model validity, disagreement, truncation, cost, or accuracy.
 
-## Run the live pilot after approval
+### 5.2 Live Pilot Experiment
 
-Copy the verified API settings from the previous project into a local `.env`
-file in this folder. Use `.env.example` for the required variable names.
-Keep your API key private. Set a USD budget you approve with `--cap`.
-For example, if your approved pilot budget is USD 1, run:
+Before running a live experiment:
+
+1. Configure the required API credentials and model settings in a local `.env` file.
+2. Verify the model configuration and API pricing settings.
+3. Keep API credentials private.
+4. Choose an approved USD spending limit using `--cap`.
+
+For example, with an approved USD 1 budget:
 
 ```bash
 python run_pilot.py --live --cap 1
 python debate.py analyze --out runs/pilot
 ```
 
-The default output cap is 4,096 tokens per response. `--max-tokens` overrides
-it for a new run. To resume, use the same manifest, settings, and output folder.
-You can raise the USD budget without invalidating the checkpoint. A changed
-token cap or prompt requires a fresh run directory.
+The default output-token cap is 4,096 tokens per response. Use `--max-tokens` to override it for a new run.
 
-Check that the pilot reports 24 question-configuration records and 168 saved
-completions. Open `runs/pilot/analysis/stage_audit.csv` to review invalid and
-truncated counts, token usage, valid-response accuracy, and disagreements.
-Open `results.json` to inspect examples of disagreeing peers and the original
-response text. A unanimous pilot leaves the disagreement check inconclusive.
-Use `run_totals.json` to review the estimated spend and recorded active
-runtime. The pilot is small, so treat the rates as a readiness check.
+To resume an interrupted experiment, use the same manifest, settings, and output folder.
 
-## Run the live final after reviewing the pilot and approving the full run
+The USD budget can be increased without invalidating the existing checkpoint. However, changing the token cap or prompt requires a fresh run directory.
 
-Use the same model, prompts, and output-token cap as in the approved pilot.
-Choose an approved full-run USD budget. For example, for an approved USD 10 cap:
+### Pilot Evaluation
+
+The pilot is expected to produce:
+
+- 24 completed question-configuration records.
+- 168 saved completions.
+
+Review the following files:
+
+| File | Purpose |
+|---|---|
+| `runs/pilot/results.json` | Saved experiment results and original responses |
+| `runs/pilot/calls.jsonl` | Individual API call records and responses |
+| `runs/pilot/analysis/summary.csv` | Accuracy and performance summaries |
+| `runs/pilot/analysis/stage_audit.csv` | Invalid and truncated responses, token usage, and response validity |
+| `runs/pilot/analysis/transitions.csv` | Answer transitions |
+| `runs/pilot/analysis/agent_answer_transitions.csv` | Individual agent answer changes |
+| `runs/pilot/analysis/transition_counts.csv` | Transition counts |
+| `runs/pilot/analysis/voting.csv` | Final voting outcomes |
+| `runs/pilot/analysis/run_totals.json` | Estimated spending and recorded active runtime |
+| `runs/pilot/analysis/findings.md` | Automated analysis findings |
+
+The analysis may also generate `mcnemar.csv` when statistical comparisons are available.
+
+A unanimous pilot leaves the disagreement check inconclusive.
+
+Since the pilot uses a small sample, its results should be treated as a readiness check rather than conclusive evidence of model performance.
+
+### 5.3 Live Final Experiment
+
+Run the final experiment only after reviewing the pilot and approving the full-run budget.
+
+Use the same model, prompts, and output-token cap as the approved pilot.
+
+For example, with an approved USD 10 budget:
 
 ```bash
 python run_final.py --live --cap 10
 python debate.py analyze --out runs/final
 ```
 
-Expect 400 completed question-configuration records and 2,800 saved
-completions. Cost is estimated from recorded usage and configured prices.
-Transport retries may incur charges absent from the saved completions.
-If the budget guard stops the run, rerun the same command with a higher
-approved budget to resume from the SQLite checkpoint.
+The final experiment is expected to produce:
 
-## V1 to V2
+- 400 completed question-configuration records.
+- 2,800 saved completions.
 
-- Added a one-agent baseline and renamed debate configurations A, B, and C.
-- Kept independent initial answers, previous-stage-only debate context, and
-  strict majority voting across all configured agent slots.
-- Added dataset-specific prompts in prompts.json and a configurable output
-  cap shared by pilot and final.
-- Audit every response before voting. Abnormal finishes, missing or duplicate
-  final-answer lines, malformed answers, and unavailable options are invalid.
-  Raw text is saved. Invalid answers contribute no vote and remain in all
-  primary denominators. An unresolved vote counts as incorrect.
-- Preserved Wilson intervals, accuracy, error rates, and cost summaries.
-  McNemar tests compare each debate configuration against the paired baseline.
-  Added stage validity and truncation statistics, token distributions,
-  disagreement counts, and three-status transition tables.
-- The analysis compares questions with all four configurations complete.
-  Stage rates are fractions. Summary accuracy and resolved-vote accuracy
-  are percentages. Runtime sums recorded active time across invocations and
-  can omit time after the last checkpoint if interrupted.
-- Pilot, final, and offline runs use separate folders under runs.
+Cost is estimated using recorded API usage and configured prices. Transport retries may incur additional charges that are not reflected in saved completions.
+
+If the budget guard stops the experiment, rerun the same command with a higher approved budget to resume from the SQLite checkpoint.
+
+## 6. Reproducibility and Data Management
+
+Experiment reproducibility is supported through:
+
+- Saved pilot and final question manifests.
+- Recorded random seeds.
+- Fixed dataset revisions and fingerprints.
+- Consistent prompts and model configurations.
+- Checkpoint-based experiment resumption.
+- Recorded token usage and API cost estimates.
+
+Keep API credentials, virtual environments, checkpoints, and raw experiment outputs out of the repository.
+
+Pilot, final, and offline experiments use separate output folders under `runs/`.
+
+## 7. Project Structure
+
+```text
+llm-debate-project/
+│
+├── debate.py
+├── audit.py
+├── analysis.py
+├── prompts.json
+│
+├── run_pilot.py
+├── run_final.py
+│
+├── pilot_manifest.json
+├── final_manifest.json
+│
+├── requirements.txt
+├── requirements-lock.txt
+├── .gitignore
+├── README.md
+│
+├── pilot/
+│   └── analysis/
+│       ├── summary.csv
+│       ├── transitions.csv
+│       └── voting.csv
+│
+└── runs/                  # Local experiment outputs (not committed)
+```
+
+## 8. Acknowledgements
+
+This project was developed as part of a university assignment exploring multi-agent LLM systems, collaborative reasoning, and the evaluation of debate-based approaches.
