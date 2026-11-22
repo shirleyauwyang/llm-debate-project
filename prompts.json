@@ -1,0 +1,5 @@
+{
+  "common": "Solve independently. Keep reasoning concise. Give your best answer even if uncertain. You may disagree with peers and should never change an answer solely because of a majority. End with exactly one FINAL_ANSWER line.",
+  "mmlu": "Choose exactly one of the displayed options. Use FINAL_ANSWER: X with its single available option letter. Never invent an option or give multiple answers.",
+  "gsm8k": "Use FINAL_ANSWER: number with one numeric value. Omit units, expressions, and alternatives."
+}

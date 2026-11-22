@@ -1,0 +1,97 @@
+{
+  "phase": "pilot",
+  "seed": 42,
+  "metadata": {
+    "mock": false,
+    "sources": {
+      "mmlu": {
+        "repository": "TIGER-Lab/MMLU-Pro",
+        "revision": "b189ec765aa7ed75c8acfea42df31fdae71f97be",
+        "fingerprint": "0072dd0a32d256fc"
+      },
+      "gsm8k": {
+        "repository": "openai/gsm8k",
+        "revision": "740312add88f781978c0658806c59bc2815b9866",
+        "fingerprint": "59ec1b7f9357c7a2"
+      }
+    }
+  },
+  "questions": [
+    {
+      "dataset": "mmlu",
+      "id": "859",
+      "question": "Amazing Realty bought an office building for $13,000,000. It isestimated that the building will last 20 years, and have a salvagevalue of $1,000,000. What is theannual depreciationallowance by the straight-line method?",
+      "options": [
+        "$480,000",
+        "$540,000",
+        "$560,000",
+        "$500,000",
+        "$650,000",
+        "$580,000",
+        "$660,000",
+        "$620,000",
+        "$600,000",
+        "$700,000"
+      ],
+      "answer": "I"
+    },
+    {
+      "dataset": "mmlu",
+      "id": "11672",
+      "question": "A container weighs 3.22 lb force when empty. Filled with waterat 60\u00b0F the mass of the container and its contents is 1.95 slugs.Find the weight of the water in the container and itsvolume in cubic feet. Assume density of water= 62.4 lb force/ft^3.",
+      "options": [
+        "40.1 lb force, 0.643 ft^3",
+        "32.2 lb force, 1 lb ft^3",
+        "59.57 lb force, 0.955 ft^3",
+        "3.22 lb force, 62.4 ft^3",
+        "65.4 lb force, 1.05 ft^3",
+        "55.35 lb force, 0.885 ft^3",
+        "70.2 lb force, 1.125 ft^3",
+        "62.79 lb force, 1.95 ft^3",
+        "121.6 lb force, 1.95 ft^3",
+        "48.84 lb force, 0.782 ft^3"
+      ],
+      "answer": "C"
+    },
+    {
+      "dataset": "mmlu",
+      "id": "10376",
+      "question": "In BASIC the RND function is used to generate a random number between 0 and 1. What statements would you use to: (a) generate integral random number between 0 and X - 1? (b) generate integral random number between 1 and X? (c) simulate the toss of a cubical die? (d) simulate a binary random choice taking values 1 or 2?",
+      "options": [
+        "(a) LET T = INT(X*RND), (b) LET V = INT(1 + X*RND), (c) LET W = INT(1 + 6*RND), (d) LET N = INT(1 + 2*RND)",
+        "(a) LET T = INT(RND/X), (b) LET V = INT(1 + RND/X), (c) LET W = INT(1 + RND/6), (d) LET N = INT(1 + RND/2)",
+        "(a) LET T = INT(RND*(X-1)+1), (b) LET V = INT(RND*X), (c) LET W = INT(6*RND), (d) LET N = INT(2*RND)",
+        "(a) LET T = INT((X-1) * RND), (b) LET V = INT(X * RND) + 1, (c) LET W = INT(5 * RND) + 1, (d) LET N = INT(RND) + 1",
+        "(a) LET T = RND(X), (b) LET V = 1+RND(X), (c) LET W = 1+RND(6), (d) LET N = 1+RND(2)",
+        "(a) LET T = INT(X * (RND + 1)), (b) LET V = INT((X + 1) * RND), (c) LET W = INT((6 + 1) * RND), (d) LET N = INT((2 + 1) * RND)",
+        "(a) LET T = RND*(X-1), (b) LET V = 1 + RND*X, (c) LET W = 1 + RND*6, (d) LET N = 1 + RND*2",
+        "(a) LET T = INT(RND * (X - 1)), (b) LET V = INT(RND * X) + 1, (c) LET W = INT(RND * 5) + 1, (d) LET N = INT(RND * 1) + 1",
+        "(a) LET T = INT(X+RND), (b) LET V = INT(X+RND), (c) LET W = INT(6+RND), (d) LET N = INT(2+RND)"
+      ],
+      "answer": "A"
+    },
+    {
+      "dataset": "gsm8k",
+      "id": "318",
+      "question": "If a classroom has 3 times as many girls as they do boys, and 1/10 as many nongendered children as they do boys, and the classroom has 30 boys.  How many total children does it have?",
+      "options": [],
+      "answer": "123"
+    },
+    {
+      "dataset": "gsm8k",
+      "id": "262",
+      "question": "Maddison has 5 boxes with 50 marbles in each box. Then she gets 20 marbles from her friend. How many marbles does she have now?",
+      "options": [],
+      "answer": "2.7E+2"
+    },
+    {
+      "dataset": "gsm8k",
+      "id": "222",
+      "question": "Andy plants 90 geraniums and 40 fewer petunias that geraniums. How many flowers does he plant total?",
+      "options": [],
+      "answer": "1.4E+2"
+    }
+  ],
+  "excluded": 0,
+  "excluded_ids": []
+}
