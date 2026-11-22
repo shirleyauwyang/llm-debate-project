@@ -13,7 +13,7 @@ __pycache__/
 .pytest_cache/
 
 # Raw experiment results and checkpoints
-runs_v2/
+runs/
 checkpoints/
 
 # macOS files
