@@ -133,6 +133,7 @@ The pilot is expected to produce:
 - 168 saved completions.
 
 Review the following files:
+**Note:** The files listed below are generated locally when an experiment is executed and analyzed. They are not all included in the GitHub repository. The repository contains selected aggregate pilot analysis tables under `pilot/analysis/`, while complete experiment outputs, raw responses, API call logs, and checkpoints are kept locally or shared privately.
 
 | File | Purpose |
 |---|---|
