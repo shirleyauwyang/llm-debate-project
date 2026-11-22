@@ -7,5 +7,5 @@ if __name__ == "__main__":
     root = Path(__file__).resolve().parent
     run = "pilot" if "--live" in sys.argv else "mock_pilot"
     sys.argv[1:1] = ["run", "--manifest", str(root / "pilot_manifest.json"),
-                     "--out", str(root / "runs_v2" / run)]
+                     "--out", str(root / "runs" / run)]
     main()

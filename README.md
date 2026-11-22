@@ -26,9 +26,9 @@ python -m pip install -r requirements.txt
 
 ```bash
 python run_pilot.py --cap 1
-python debate.py analyze --out runs_v2/mock_pilot
+python debate.py analyze --out runs/mock_pilot
 python run_final.py --cap 5
-python debate.py analyze --out runs_v2/mock_final
+python debate.py analyze --out runs/mock_final
 ```
 
 These commands use synthetic responses and verify the workflow. Mock outputs
@@ -43,7 +43,7 @@ For example, if your approved pilot budget is USD 1, run:
 
 ```bash
 python run_pilot.py --live --cap 1
-python debate.py analyze --out runs_v2/pilot
+python debate.py analyze --out runs/pilot
 ```
 
 The default output cap is 4,096 tokens per response. `--max-tokens` overrides
@@ -52,7 +52,7 @@ You can raise the USD budget without invalidating the checkpoint. A changed
 token cap or prompt requires a fresh run directory.
 
 Check that the pilot reports 24 question-configuration records and 168 saved
-completions. Open `runs_v2/pilot/analysis/stage_audit.csv` to review invalid and
+completions. Open `runs/pilot/analysis/stage_audit.csv` to review invalid and
 truncated counts, token usage, valid-response accuracy, and disagreements.
 Open `results.json` to inspect examples of disagreeing peers and the original
 response text. A unanimous pilot leaves the disagreement check inconclusive.
@@ -66,7 +66,7 @@ Choose an approved full-run USD budget. For example, for an approved USD 10 cap:
 
 ```bash
 python run_final.py --live --cap 10
-python debate.py analyze --out runs_v2/final
+python debate.py analyze --out runs/final
 ```
 
 Expect 400 completed question-configuration records and 2,800 saved
@@ -94,4 +94,4 @@ approved budget to resume from the SQLite checkpoint.
   Stage rates are fractions. Summary accuracy and resolved-vote accuracy
   are percentages. Runtime sums recorded active time across invocations and
   can omit time after the last checkpoint if interrupted.
-- Pilot, final, and offline runs use separate folders under runs_v2.
+- Pilot, final, and offline runs use separate folders under runs.
