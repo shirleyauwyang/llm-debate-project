@@ -1,0 +1,9 @@
+dataset,system,total_questions,correct_answers,final_accuracy_pct
+gsm8k,Baseline,50,47,94.0
+gsm8k,A,50,47,94.0
+gsm8k,B,50,48,96.0
+gsm8k,C,50,47,94.0
+mmlu,Baseline,50,42,84.0
+mmlu,A,50,44,88.0
+mmlu,B,50,45,90.0
+mmlu,C,50,44,88.0
