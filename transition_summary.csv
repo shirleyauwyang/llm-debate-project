@@ -1,9 +1,0 @@
-dataset,system,model,questions,wrong_to_correct,correct_to_wrong,correct_to_correct,wrong_to_wrong,invalid_to_correct,correct_to_invalid,wrong_to_invalid,invalid_to_wrong,invalid_to_invalid,net_valid_corrections
-gsm8k,A,Model 1,50,0,1,141,5,0,1,0,0,2,-1
-gsm8k,B,Model 2,50,1,0,287,6,0,2,0,0,4,1
-gsm8k,Baseline,Baseline,50,0,0,0,0,0,0,0,0,0,0
-gsm8k,C,Model 3,50,2,1,421,16,1,0,0,0,9,1
-mmlu,A,Model 1,50,6,0,124,18,2,0,0,0,0,6
-mmlu,B,Model 2,50,6,0,255,32,4,3,0,0,0,6
-mmlu,Baseline,Baseline,50,0,0,0,0,0,0,0,0,0,0
-mmlu,C,Model 3,50,8,2,382,38,9,5,2,4,0,6
