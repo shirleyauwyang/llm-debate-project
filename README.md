@@ -222,9 +222,6 @@ Pilot, final, and offline experiments use separate output folders under `runs/`.
 ## 8. Project Structure
 
 ```text
-## Project Structure
-
-```text
 llm-debate-project/
 │
 ├── debate.py
@@ -282,7 +279,6 @@ llm-debate-project/
 ```
 
 **Note:** Raw experiment outputs, API logs, checkpoints, and other temporary files may be maintained separately from the published analysis files.
-```
 
 ## 9. Acknowledgements
 
