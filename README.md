@@ -200,11 +200,12 @@ llm-debate-project/
 ├── debate.py
 ├── audit.py
 ├── analysis.py
-├── prompts.json
+├── create_charts.py
 │
 ├── run_pilot.py
 ├── run_final.py
 │
+├── prompts.json
 ├── pilot_manifest.json
 ├── final_manifest.json
 │
@@ -213,14 +214,27 @@ llm-debate-project/
 ├── .gitignore
 ├── README.md
 │
+├── charts/
+│   ├── accuracy_by_configuration.png
+│   ├── answer_transitions_by_configuration.png
+│   ├── api_cost_vs_accuracy.png
+│   ├── corrections_by_round.png
+│   └── cumulative_accuracy.png
+│
 ├── pilot/
 │   └── analysis/
 │       ├── summary.csv
 │       ├── transitions.csv
-│       └── voting.csv
+│       ├── voting.csv
 │       └── stage_audit.csv
 │
-└── runs/                  # Local experiment outputs (not committed)
+└── runs/
+    └── final/
+        ├── results.json
+        ├── calls.jsonl
+        ├── run_config.json
+        ├── environment.json
+        └── runtime.json
 ```
 
 ## 8. Acknowledgements
