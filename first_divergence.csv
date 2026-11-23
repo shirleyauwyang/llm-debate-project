@@ -1,7 +1,0 @@
-dataset,system_a,system_b,first_cumulative_difference_question
-gsm8k,A,B,19
-gsm8k,B,C,45
-gsm8k,A,C,19
-mmlu,A,B,14
-mmlu,B,C,1
-mmlu,A,C,1
