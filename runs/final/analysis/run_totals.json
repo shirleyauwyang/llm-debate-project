@@ -1,0 +1,9 @@
+{
+  "calls": 2800,
+  "input_tokens": 1521401,
+  "output_tokens": 443757,
+  "total_tokens": 1965158,
+  "cost_usd": 0.889545234,
+  "active_seconds": 4293.482460374973,
+  "mock": false
+}

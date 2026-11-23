@@ -1,0 +1,7 @@
+dataset,system,both_correct,baseline_only,debate_only,both_incorrect,p_unadjusted
+mmlu,A,40,2,4,4,0.6875
+mmlu,B,41,1,4,4,0.375
+mmlu,C,39,3,5,3,0.7265625
+gsm8k,A,46,1,1,2,1
+gsm8k,B,46,1,2,1,1
+gsm8k,C,46,1,1,2,1
