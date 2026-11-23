@@ -31,7 +31,34 @@ Pilot and final samples are disjoint. Saved question manifests and random seeds 
 
 The baseline generates an independent answer without debate. The other configurations use three agents that exchange responses across the specified number of debate rounds.
 
-## 3. System Design and Evaluation
+## 3. Experimental Development and Version History
+
+The project underwent two experimental iterations as the experimental design was refined.
+
+### Version 1 (V1) – Original Experiment
+
+The initial experiment used three multi-agent configurations: D, E, and F. These configurations were part of the original experimental design and were used during the earlier pilot phase.
+
+The original pilot analysis results are retained in `results/v1/analysis/` for documentation and reference.
+
+### Version 2 (V2) – Revised Experiment
+
+The experimental design was subsequently revised to provide a clearer comparison between single-agent and multi-agent systems.
+
+V2 introduced four configurations:
+
+- **Baseline:** One agent with no debate.
+- **A:** Three agents with one debate round.
+- **B:** Three agents with two debate rounds.
+- **C:** Three agents with three debate rounds.
+
+The final experiment used V2 across MMLU-Pro and GSM8K, with 50 questions per dataset (100 questions in total).
+
+V2 results, statistical analyses, and visualizations are stored separately from V1 to maintain a clear distinction between the two experimental designs.
+
+Results from V1 and V2 are treated as separate experimental iterations and are not directly combined.
+
+## 4. System Design and Evaluation
 
 ### Response Generation and Debate
 
@@ -70,7 +97,7 @@ Stage rates are expressed as fractions, while summary accuracy and resolved-vote
 
 Runtime represents recorded active time across invocations and may omit time after the last checkpoint if an experiment is interrupted.
 
-## 4. Installation and Setup
+## 5. Installation and Setup
 
 Open a terminal in the project folder.
 
@@ -87,9 +114,9 @@ Install the required dependencies:
 python -m pip install -r requirements.txt
 ```
 
-## 5. Running Experiments
+## 6. Running Experiments
 
-### 5.1 Offline Testing
+### 6.1 Offline Testing
 
 The experiment runs in mock mode by default. The following commands test the workflow using synthetic responses without making live API calls.
 
@@ -103,7 +130,7 @@ python debate.py analyze --out runs/mock_final
 
 Mock outputs are intended for workflow testing only. They cannot measure real model validity, disagreement, truncation, cost, or accuracy.
 
-### 5.2 Live Pilot Experiment
+### 6.2 Live Pilot Experiment
 
 Before running a live experiment:
 
@@ -155,7 +182,7 @@ A unanimous pilot leaves the disagreement check inconclusive.
 
 Since the pilot uses a small sample, its results should be treated as a readiness check rather than conclusive evidence of model performance.
 
-### 5.3 Live Final Experiment
+### 6.3 Live Final Experiment
 
 Run the final experiment only after reviewing the pilot and approving the full-run budget.
 
@@ -177,7 +204,7 @@ Cost is estimated using recorded API usage and configured prices. Transport retr
 
 If the budget guard stops the experiment, rerun the same command with a higher approved budget to resume from the SQLite checkpoint.
 
-## 6. Reproducibility and Data Management
+## 7. Reproducibility and Data Management
 
 Experiment reproducibility is supported through:
 
@@ -192,7 +219,10 @@ Keep API credentials, virtual environments, checkpoints, and raw experiment outp
 
 Pilot, final, and offline experiments use separate output folders under `runs/`.
 
-## 7. Project Structure
+## 8. Project Structure
+
+```text
+## Project Structure
 
 ```text
 llm-debate-project/
@@ -200,6 +230,9 @@ llm-debate-project/
 ├── debate.py
 ├── audit.py
 ├── analysis.py
+├── confidence_interval.py
+├── cumulative_accuracy.py
+├── transition_analysis.py
 ├── create_charts.py
 │
 ├── run_pilot.py
@@ -214,29 +247,43 @@ llm-debate-project/
 ├── .gitignore
 ├── README.md
 │
-├── charts/
-│   ├── accuracy_by_configuration.png
-│   ├── answer_transitions_by_configuration.png
-│   ├── api_cost_vs_accuracy.png
-│   ├── corrections_by_round.png
-│   └── cumulative_accuracy.png
-│
-├── pilot/
-│   └── analysis/
-│       ├── summary.csv
-│       ├── transitions.csv
-│       ├── voting.csv
-│       └── stage_audit.csv
-│
-└── runs/
-    └── final/
-        ├── results.json
-        ├── calls.jsonl
-        ├── run_config.json
-        ├── environment.json
-        └── runtime.json
+└── results/
+    │
+    ├── v1/
+    │   └── analysis/
+    │       ├── summary.csv
+    │       ├── transitions.csv
+    │       └── voting.csv
+    │
+    └── v2/
+        │
+        ├── pilot/
+        │   └── analysis/
+        │       └── stage_audit.csv
+        │
+        ├── final/
+        │   └── analysis/
+        │       ├── summary.csv
+        │       ├── mcnemar.csv
+        │       ├── transitions.csv
+        │       ├── agent_answer_transitions.csv
+        │       ├── transition_counts.csv
+        │       ├── stage_audit.csv
+        │       ├── voting.csv
+        │       ├── run_totals.json
+        │       └── findings.md
+        │
+        └── charts/
+            ├── accuracy_by_configuration.png
+            ├── answer_transitions_by_configuration.png
+            ├── api_cost_vs_accuracy.png
+            ├── corrections_by_round.png
+            └── cumulative_accuracy.png
 ```
 
-## 8. Acknowledgements
+**Note:** Raw experiment outputs, API logs, checkpoints, and other temporary files may be maintained separately from the published analysis files.
+```
+
+## 9. Acknowledgements
 
 This project was developed as part of a university assignment exploring multi-agent LLM systems, collaborative reasoning, and the evaluation of debate-based approaches.
