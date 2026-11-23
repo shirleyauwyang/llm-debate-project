@@ -1,0 +1,28 @@
+dataset,system,model,stage,issue,reason,count
+gsm8k,A,Model 1,0,invalid,invalid_answer_format,2
+gsm8k,A,Model 1,1,invalid,invalid_answer_format,3
+gsm8k,B,Model 2,0,invalid,invalid_answer_format,1
+gsm8k,B,Model 2,1,invalid,invalid_answer_format,3
+gsm8k,B,Model 2,2,invalid,invalid_answer_format,3
+gsm8k,C,Model 3,0,invalid,invalid_answer_format,3
+gsm8k,C,Model 3,0,invalid,multiple_final_answers,1
+gsm8k,C,Model 3,1,invalid,invalid_answer_format,3
+gsm8k,C,Model 3,2,invalid,invalid_answer_format,3
+gsm8k,C,Model 3,3,invalid,invalid_answer_format,3
+mmlu,A,Model 1,0,invalid,finish_not_stop,2
+mmlu,A,Model 1,0,truncated,length,2
+mmlu,B,Model 2,0,invalid,finish_not_stop,4
+mmlu,B,Model 2,0,truncated,length,4
+mmlu,B,Model 2,2,invalid,finish_not_stop,2
+mmlu,B,Model 2,2,invalid,missing_final_answer,1
+mmlu,B,Model 2,2,truncated,length,2
+mmlu,Baseline,Baseline,0,invalid,finish_not_stop,1
+mmlu,Baseline,Baseline,0,truncated,length,1
+mmlu,C,Model 3,0,invalid,finish_not_stop,8
+mmlu,C,Model 3,0,invalid,missing_final_answer,1
+mmlu,C,Model 3,0,truncated,length,8
+mmlu,C,Model 3,2,invalid,finish_not_stop,3
+mmlu,C,Model 3,2,invalid,missing_final_answer,1
+mmlu,C,Model 3,2,truncated,length,3
+mmlu,C,Model 3,3,invalid,finish_not_stop,3
+mmlu,C,Model 3,3,truncated,length,3
